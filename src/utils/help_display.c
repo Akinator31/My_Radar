@@ -37,9 +37,9 @@ static const char *help_message =
 
 int help(int ac, char **av)
 {
-    if ((ac > 2) || (my_strcmp(av[1], "-h") != 0)) {
+    if (ac > 2)
         return 84;
-    }
-    write(1, help_message, my_strlen(help_message) + 1);
+    if (my_strcmp(av[1], "-h") == 0)
+        write(1, help_message, my_strlen(help_message) + 1);
     return 0;
 }
