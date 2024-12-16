@@ -1,1 +1,6 @@
 .vscode/
+generator.py
+my_radar
+build/
+build-debug/
+script.rdr

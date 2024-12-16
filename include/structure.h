@@ -16,7 +16,7 @@
     #define AREA(x, y) ((sfIntRect){(x), (y)})
     #define TX_CREATE(res, i) res = sfTexture_createFromFile(assets[i], NULL)
     #define MUSIC_CREATE(res, i) res = sfMusic_createFromFile(assets[i])
-    #define GET_RES(name) engine->ressources->name
+    #define GET_RES(id) get_ressource_by_id(engine->ressources, id)
     #define GET_SPRITE() ((entity_t *)(temp->data))->sprite
     #define MOUSE_RELEASED() engine->event.type == sfEvtMouseButtonReleased
     #define MOUSE_PRESSED() engine->event.type == sfEvtMouseButtonPressed
@@ -57,7 +57,7 @@ struct engine_s {
     sfClock *clock;
     scene_t *current_scene;
     linked_list_t *scenes_list;
-    ressource_manager_t *ressources;
+    linked_list_t *ressources;
     sfEvent event;
     int state;
     float delta_time;

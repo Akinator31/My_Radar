@@ -42,7 +42,7 @@ entity_t *create_entity(sfTexture *texture, sfVector2f pos, int id,
     return entity;
 }
 
-entity_t *create_text(int text, sfVector2f pos, engine_t *engine)
+entity_t *create_text(int text, sfVector2f pos)
 {
     entity_t *entity = malloc(sizeof(entity_t));
     sfColor orange = sfColor_fromRGB(254, 116, 15);
@@ -54,7 +54,6 @@ entity_t *create_text(int text, sfVector2f pos, engine_t *engine)
     entity->entity_destroy = &destroy_text_entity;
     sfText_setString(entity->text, text_num);
     sfText_setPosition(entity->text, pos);
-    sfText_setFont(entity->text, engine->ressources->font);
     sfText_setStyle(entity->text, sfTextBold);
     sfText_setColor(entity->text, orange);
     sfText_setCharacterSize(entity->text, 100);

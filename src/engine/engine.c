@@ -9,7 +9,7 @@
 #include <SFML/Graphics.h>
 #include "engine.h"
 #include "my_lib.h"
-#include "my_hunter.h"
+#include "my_radar.h"
 #include "structure.h"
 #include "ressources.h"
 #include "scenes.h"
@@ -35,8 +35,7 @@ engine_t *load_game(unsigned int default_framerate, char **envp)
     engine->window = create_window(WIDTH, HEIGTH, NAME);
     engine->clock = sfClock_create();
     engine->current_scene = NULL;
-    engine->scenes_list = NULL;
-    engine->ressources = create_ressources();
+    engine->ressources = get_ressources_list();
     engine->scenes_list = load_scenes(engine);
     engine->state = RUNNING;
     engine->delta_time = 0.0;
@@ -52,11 +51,11 @@ void clean_scene(linked_list_t *list)
 {
     linked_list_t *temp = list;
 
-    while (list != NULL) {
-        ((scene_t *)list->data)->scene_destroy(list->data);
-        list = list->next;
+    while (temp != NULL) {
+        ((scene_t *)temp->data)->scene_destroy(temp->data);
+        temp = temp->next;
     }
-    clear_list(temp);
+    list = clear_list(list);
 }
 
 int engine_destroy(engine_t *engine)
@@ -66,8 +65,7 @@ int engine_destroy(engine_t *engine)
     clean_scene(engine->scenes_list);
     sfRenderWindow_destroy(engine->window);
     sfClock_destroy(engine->clock);
-    ((ressource_manager_t *)(engine->ressources))->
-        destroy_ressources(engine->ressources);
+    destroy_ressources(engine->ressources);
     free(engine->ressources);
     free(engine);
     return 0;

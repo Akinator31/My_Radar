@@ -5,24 +5,57 @@
 ** game
 */
 
+#include <stdlib.h>
+#include <time.h>
+#include "engine.h"
+#include "scenes.h"
+#include "entity.h"
+#include "utils.h"
+
+void render_game_page(scene_t *scene, engine_t *engine)
+{
+    linked_list_t *temp = scene->entity_list;
+
+    while (temp != NULL) {
+        sfRenderWindow_drawSprite(engine->window,
+            ((entity_t *)temp->data)->sprite, NULL);
+        temp = temp->next;
+    }
+}
+
+void destroy_game_page(scene_t *scene)
+{
+    linked_list_t *temp = scene->entity_list;
+
+    for (int i = 0; temp != NULL; i++) {
+        ((entity_t *)temp->data)->entity_destroy(temp->data);
+        temp = temp->next;
+    }
+    sfClock_destroy(scene->clock);
+    scene->entity_list = clear_list(scene->entity_list);
+    free(scene);
+}
+
+int update_game_page(scene_t *scene, engine_t *engine)
+{
+    return 0;
+}
+
 scene_t *init_game_scene(engine_t *engine)
 {
     linked_list_t *entity_list = new_list();
     scene_t *game_scene = malloc(sizeof(scene_t));
 
     srand(time(NULL));
-    sfMusic_setLoop(GET_RES(game_music), sfTrue);
-    entity_list = push_front_list_all(entity_list, 4,
-        create_entity(GET_RES(quit_button), POS(30, 30), 3, NULL),
-        create_entity(GET_RES(pause_button), POS(1739, 30), 2, NULL),
-        create_text(0, POS(1200, 40), engine),
-        create_entity(GET_RES(game_background), POS(0, 0), 1, NULL));
-    game_scene->id = 3;
+    entity_list = push_front_list_all(entity_list, 1,
+        create_entity(GET_RES(BACKGROUND)->ressource, POS(0, 0), 1, NULL));
+    game_scene->id = 0;
     game_scene->clock = sfClock_create();
     game_scene->entity_list = entity_list;
-    game_scene->scene_render = &render_game_scene;
-    game_scene->scene_update = &update_game_scene;
-    game_scene->scene_pause_update = &update_pause_game;
-    game_scene->scene_destroy = &destroy_game_scene;
+    game_scene->scene_render = &render_game_page;
+    game_scene->scene_update = &update_game_page;
+    game_scene->scene_destroy = &destroy_game_page;
+    engine->current_scene = game_scene;
+    engine->state = RUNNING;
     return game_scene;
 }

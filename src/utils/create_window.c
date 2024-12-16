@@ -5,7 +5,7 @@
 ** create_window
 */
 
-#include "my_hunter.h"
+#include "my_radar.h"
 
 sfRenderWindow *create_window(unsigned int width,
     unsigned int heigth, char *window_title)

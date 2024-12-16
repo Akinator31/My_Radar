@@ -14,7 +14,7 @@ linked_list_t *new_list(void)
     return NULL;
 }
 
-linked_list_t *clear_list(linked_list_t *list, void (*clear_func)(void *data))
+linked_list_t *clear_list_and_data(linked_list_t *list, void (*clear_func)(void *data))
 {
     linked_list_t *temp = list;
 
@@ -22,6 +22,19 @@ linked_list_t *clear_list(linked_list_t *list, void (*clear_func)(void *data))
         temp = list;
         list = list->next;
         clear_func(temp->data);
+        free(temp);
+    }
+    free(list);
+    return NULL;
+}
+
+linked_list_t *clear_list(linked_list_t *list)
+{
+    linked_list_t *temp = list;
+
+    while (list != NULL) {
+        temp = list;
+        list = list->next;
         free(temp);
     }
     free(list);

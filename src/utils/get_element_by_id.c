@@ -1,12 +1,13 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-MUL-100-TLS-1-1-myhunter-pavel.de-wavrechin
+** B-MUL-100-TLS-1-1-myradar-pavel.de-wavrechin
 ** File description:
-** get_scene_by_id
+** get_element_by_id
 */
 
 #include "structure.h"
 #include "engine.h"
+#include "ressources.h"
 
 scene_t *get_scene_by_id(engine_t *engine, int id)
 {
@@ -16,6 +17,18 @@ scene_t *get_scene_by_id(engine_t *engine, int id)
         if (((scene_t *)(temp->data))->id == id) {
             return ((scene_t *)(temp->data));
         }
+        temp = temp->next;
+    }
+    return NULL;
+}
+
+ressource_t *get_ressource_by_id(linked_list_t *list, assets_t id)
+{
+    linked_list_t *temp = list;
+
+    while (temp != NULL) {
+        if (((ressource_t *)(temp->data))->id == id)
+            return temp->data;
         temp = temp->next;
     }
     return NULL;
