@@ -12,7 +12,7 @@
     #include "structure.h"
     #include "ressources.h"
 
-engine_t *load_game(unsigned int default_framerate, char **envp);
+engine_t *load_game(unsigned int default_framerate, char **envp, int ac, char **argv);
 int engine_destroy(engine_t *engine);
 void load_current_scene(engine_t *engine);
 

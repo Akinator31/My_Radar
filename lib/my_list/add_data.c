@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "../../include/my_list.h"
+#include "my_list.h"
 #include "my_lib.h"
 #include <stdarg.h>
 

@@ -10,7 +10,7 @@
     #include "my_list.h"
     #include "engine.h"
 
-linked_list_t *load_scenes(engine_t *engine);
-scene_t *init_game_scene(engine_t *engine);
+linked_list_t *load_scenes(engine_t *engine, char *script_path);
+scene_t *init_game_scene(engine_t *engine, char *script_path);
 
 #endif

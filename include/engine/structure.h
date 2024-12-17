@@ -10,6 +10,7 @@
     #include <SFML/Graphics.h>
     #include <SFML/Audio.h>
     #include <stdbool.h>
+    #include <stdio.h>
     #include "my_list.h"
     #include "my_lib.h"
     #define POS(x, y) ((sfVector2f){(x), (y)})
@@ -59,12 +60,9 @@ struct engine_s {
     linked_list_t *scenes_list;
     linked_list_t *ressources;
     sfEvent event;
-    int state;
+    FILE *script_file;
     float delta_time;
     int default_fps_framerate;
-    int music_state;
-    int music_selector;
-    int score;
 };
 
 struct scene_s {
@@ -77,20 +75,29 @@ struct scene_s {
     void (*scene_destroy)(scene_t *scene);
 };
 
+// struct entity_s {
+//     sfSprite *sprite;
+//     sfVector2f takeoff_pos;
+//     sfVector2f landing_pos;
+//     int velocity;
+//     double direction_angle;
+//     int id;
+//     int state;
+//     int is_text;
+//     sfText *text;
+//     sfClock *clock;
+//     void (*entity_init)(entity_t *entity, scene_t *scene, engine_t *engine);
+//     void (*entity_update)(entity_t *entity, scene_t *scene, engine_t *engine);
+//     void (*entity_render)(entity_t *entity, engine_t *engine);
+//     sfBool (*entity_check_collision)(entity_t *entity, entity_t *other);
+//     void (*entity_destroy)(entity_t *entity);
+// };
+
 struct entity_s {
-    sfSprite *sprite;
-    sfVector2f pos;
-    int velocity;
-    double direction_angle;
     int id;
-    int state;
-    int is_text;
-    sfText *text;
-    sfClock *clock;
-    void (*entity_init)(entity_t *entity, scene_t *scene, engine_t *engine);
-    void (*entity_update)(entity_t *entity, scene_t *scene, engine_t *engine);
+    void *data;
     void (*entity_render)(entity_t *entity, engine_t *engine);
-    sfBool (*entity_check_collision)(entity_t *entity, entity_t *other);
+    void (*entity_update)(entity_t *entity, scene_t *scene, engine_t *engine);
     void (*entity_destroy)(entity_t *entity);
 };
 

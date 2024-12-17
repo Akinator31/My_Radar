@@ -15,5 +15,6 @@ int my_put_nbr(int nb);
 char *my_strlowcase(char *str);
 void my_putchar(char c);
 int my_strlen(char const *str);
+char **my_str_to_word_array(char const *str);
 
 #endif

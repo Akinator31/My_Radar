@@ -15,18 +15,21 @@
 #include "scenes.h"
 #include "event.h"
 #include "utils.h"
+#include "errors.h"
 
 int main(int ac, char **av, char **envp)
 {
     engine_t *engine;
 
-    if (ac > 1)
+    if (ac == 1)
+        return errors_manager(NOT_ENOUGHT_ARG);
+    if ((ac > 1) && (my_strcmp(av[1], "-h") == 0))
         return help(ac, av);
-    engine = load_game(60, envp);
+    engine = load_game(60, envp, ac, av);
     while ((engine != NULL) && sfRenderWindow_isOpen(engine->window)) {
         sfRenderWindow_clear(engine->window, sfBlack);
         load_current_scene(engine);
-        if (engine->state == RUNNING && ((scene_t *)(engine->current_scene))
+        if (((scene_t *)(engine->current_scene))
             ->scene_update(engine->current_scene, engine) == 84)
             return engine_destroy(engine);
         while (sfRenderWindow_pollEvent(engine->window, &engine->event))

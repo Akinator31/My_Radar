@@ -21,5 +21,9 @@ scene_t *get_scene_by_id(engine_t *engine, int id);
 int help(int ac, char **av);
 sfVector2f get_random_pos(engine_t *engine);
 ressource_t *get_ressource_by_id(linked_list_t *list, assets_t id);
+int arrlen(const char **arr);
+int is_char_of_char(char *buffer);
+int is_char_of_number(char *buffer);
+void free_2d_array_of_char(char **arr);
 
 #endif

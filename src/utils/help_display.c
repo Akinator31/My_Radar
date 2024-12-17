@@ -9,6 +9,7 @@
 #include "structure.h"
 #include "my_lib.h"
 #include "utils.h"
+#include "errors.h"
 
 static const char *help_message = 
     "=============================\n"
@@ -38,7 +39,7 @@ static const char *help_message =
 int help(int ac, char **av)
 {
     if (ac > 2)
-        return 84;
+        return errors_manager(TOO_MANY_ARG);
     if (my_strcmp(av[1], "-h") == 0)
         write(1, help_message, my_strlen(help_message) + 1);
     return 0;
