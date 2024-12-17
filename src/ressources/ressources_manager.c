@@ -12,7 +12,7 @@
 #include "ressources.h"
 
 static const char *assets[] = {
-    "./assets/images/game_scene/world_map1.png",
+    "./assets/images/game_scene/world_map.png",
     "./assets/images/game_scene/plane.png",
     "./assets/images/game_scene/tower.png"
 };
