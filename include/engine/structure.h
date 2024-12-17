@@ -25,6 +25,7 @@
     #define IS_CLICK(sprite) is_mouse_on_sprite(engine, sprite)
     #define SF_VECTOR_2U(x, y) ((sfVector2u){(x), (y)})
     #define SF_VECTOR_2I(x, y) ((sfVector2i){(x), (y)})
+    #define SF_VECTOR_2F(x, y) ((sfVector2f){(x), (y)})
 
 typedef struct engine_s engine_t;
 typedef struct scene_s scene_t;
@@ -60,7 +61,7 @@ struct engine_s {
     linked_list_t *scenes_list;
     linked_list_t *ressources;
     sfEvent event;
-    FILE *script_file;
+    char *script_path;
     float delta_time;
     int default_fps_framerate;
 };

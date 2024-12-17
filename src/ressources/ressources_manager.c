@@ -12,21 +12,25 @@
 #include "ressources.h"
 
 static const char *assets[] = {
-    "./assets/images/game_scene/world_map.png"
+    "./assets/images/game_scene/world_map1.png",
+    "./assets/images/game_scene/plane.png",
+    "./assets/images/game_scene/tower.png"
 };
 
 linked_list_t *destroy_ressources(linked_list_t *ressources_list)
 {
     linked_list_t *temp = ressources_list;
 
-    while (temp != NULL)
+    while (ressources_list != NULL)
     {
+        temp = ressources_list;
+        ressources_list = ressources_list->next;
         if (((ressource_t *)(temp->data))->type == TEXTURE) {
             sfTexture_destroy((sfTexture *)((ressource_t *)
                 (temp->data))->ressource);
             free(temp->data);
+            free(temp);
         }
-        temp = temp->next;
     }
     return ressources_list;
 }
@@ -49,7 +53,9 @@ linked_list_t *get_ressources_list(void)
 {
     linked_list_t *ressources_list = new_list();
 
-    ressources_list = push_front_list(ressources_list,
-        create_ressources(assets[0], TEXTURE, BACKGROUND));
+    ressources_list = push_front_list_all(ressources_list, 3,
+        create_ressources(assets[0], TEXTURE, BACKGROUND),
+        create_ressources(assets[1], TEXTURE, AIRCRAFT),
+        create_ressources(assets[2], TEXTURE, TOWER));
     return ressources_list;
 }

@@ -19,8 +19,8 @@ int my_strcmp(char *s1, char *s2)
 {
     int i = 0;
     int result = 0;
-    char *test1 = my_strlowcase(s1);
-    char *test2 = my_strlowcase(s2);
+    char *test1 = s1;
+    char *test2 = s2;
 
     for (int i = 0; (test1[i] != '\0') || (test2[i] != '\0'); i++) {
         if (test1[i] != test2[i]) {

@@ -60,7 +60,7 @@ int script_file_content_inspection(FILE *script_file)
     return 1;
 }
 
-FILE *check_script_file(char **argv)
+char *check_script_file(char **argv)
 {
     FILE *script_file = fopen(argv[1], "r");
 
@@ -72,15 +72,15 @@ FILE *check_script_file(char **argv)
         errors_manager(INVALID_SCRIPT_CONTENT);
         return NULL;
     }
-    return script_file;
+    return argv[1];
 }
 
 engine_t *load_game(unsigned int default_framerate, char **envp, int ac, char **argv)
 {
     engine_t *engine = malloc(sizeof(*engine));
 
-    engine->script_file = check_script_file(argv);
-    if (!tty_checker(envp) || (ac < 2) || (engine->script_file == NULL) || (ac > 2)) {
+    engine->script_path = check_script_file(argv);
+    if (!tty_checker(envp) || (ac < 2) || (engine->script_path == NULL) || (ac > 2)) {
         free(engine);
         return NULL;
     }
@@ -115,7 +115,6 @@ int engine_destroy(engine_t *engine)
     sfRenderWindow_destroy(engine->window);
     sfClock_destroy(engine->clock);
     destroy_ressources(engine->ressources);
-    free(engine->ressources);
     free(engine);
     return 0;
 }

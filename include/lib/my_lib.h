@@ -16,5 +16,7 @@ char *my_strlowcase(char *str);
 void my_putchar(char c);
 int my_strlen(char const *str);
 char **my_str_to_word_array(char const *str);
+int my_getnbr(char const *str);
+int my_compute_power_rec(int nb, int p);
 
 #endif

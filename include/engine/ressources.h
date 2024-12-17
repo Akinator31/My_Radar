@@ -13,7 +13,9 @@
 typedef struct ressource_s ressource_t;
 
 typedef enum {
-    BACKGROUND
+    BACKGROUND,
+    AIRCRAFT,
+    TOWER
 } assets_t;
 
 typedef enum {

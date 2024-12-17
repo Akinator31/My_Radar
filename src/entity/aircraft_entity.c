@@ -10,29 +10,33 @@
 #include "entity.h"
 #include "utils.h"
 
-void render_aircraft_entity(entity_t *image_entity, engine_t *engine)
+void render_aircraft_entity(entity_t *aircraft_entity, engine_t *engine)
 {
-    sfRenderWindow_drawSprite(engine->window, ((image_t *)(image_entity->data))->sprite, NULL);
+    sfRenderWindow_drawSprite(engine->window, ((aircraft_t *)(aircraft_entity->data))->sprite, NULL);
 }
 
-void destroy_aircraft_entity(entity_t *image_entity)
+void destroy_aircraft_entity(entity_t *aircraft_entity)
 {
-    sfSprite_destroy(((image_t *)(image_entity->data))->sprite);
-    free(image_entity->data);
-    free(image_entity);
+    sfSprite_destroy(((aircraft_t *)(aircraft_entity->data))->sprite);
+    sfClock_destroy(((aircraft_t *)(aircraft_entity->data))->clock);
+    free(aircraft_entity->data);
+    free(aircraft_entity);
 }
 
-entity_t *create_aircraft_entity(sfTexture *texture, sfVector2f pos)
+entity_t *create_aircraft_entity(sfTexture *texture, sfVector2f takeoff_pos, sfVector2f landing_pos)
 {
-    entity_t *image_entity = malloc(sizeof(entity_t));
-    image_t *image = malloc(sizeof(image_t));
+    entity_t *aircraft_entity = malloc(sizeof(entity_t));
+    aircraft_t *aircraft = malloc(sizeof(aircraft_t));
 
-    image->pos = pos;
-    image->sprite = sfSprite_create();
-    sfSprite_setTexture(image->sprite, texture, sfFalse);
-    image_entity->data = image;
-    image_entity->entity_render = render_aircraft_entity;
-    image_entity->entity_update = NULL;
-    image_entity->entity_destroy = destroy_aircraft_entity;
-    return image_entity;
+    aircraft->sprite = sfSprite_create();
+    aircraft->takeoff_pos = takeoff_pos;
+    aircraft->landing_pos = landing_pos;
+    aircraft->clock = sfClock_create();
+    sfSprite_setTexture(aircraft->sprite, texture, sfFalse);
+    sfSprite_setPosition(aircraft->sprite, takeoff_pos);
+    aircraft_entity->data = aircraft;
+    aircraft_entity->entity_render = render_aircraft_entity;
+    aircraft_entity->entity_update = NULL;
+    aircraft_entity->entity_destroy = destroy_aircraft_entity;
+    return aircraft_entity;
 }

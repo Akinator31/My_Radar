@@ -55,7 +55,8 @@ scene_t *init_game_scene(engine_t *engine, char *script_path)
     srand(time(NULL));
     entity_list = push_front_list_all(entity_list, 1,
         create_image_entity(GET_RES(BACKGROUND)->ressource, POS(0, 0)));
-    //entity_list = create_aircrafts(entity_list);
+    entity_list = create_aircrafts(entity_list, engine);
+    entity_list = create_tower(entity_list, engine);
     game_scene->id = 0;
     game_scene->clock = sfClock_create();
     game_scene->entity_list = entity_list;
