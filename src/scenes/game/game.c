@@ -47,7 +47,7 @@ int update_game_page(scene_t *scene, engine_t *engine)
     return 0;
 }
 
-scene_t *init_game_scene(engine_t *engine, char *script_path)
+scene_t *init_game_scene(engine_t *engine)
 {
     linked_list_t *entity_list = new_list();
     scene_t *game_scene = malloc(sizeof(scene_t));

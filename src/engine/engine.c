@@ -88,7 +88,7 @@ engine_t *load_game(unsigned int default_framerate, char **envp, int ac, char **
     engine->clock = sfClock_create();
     engine->current_scene = NULL;
     engine->ressources = get_ressources_list();
-    engine->scenes_list = load_scenes(engine, argv[2]);
+    engine->scenes_list = load_scenes(engine);
     engine->delta_time = 0.0;
     engine->default_fps_framerate = default_framerate;
     sfRenderWindow_setFramerateLimit(engine->window,

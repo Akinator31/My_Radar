@@ -10,7 +10,7 @@
 
 int check_minus_and_size_number(int result, int minus, int size_nb)
 {
-    if ((result < -2147483648) || (result > 2147483647) || size_nb > 11)
+    if ((result < -2147483647) || (result > 2147483647) || size_nb > 11)
         return 0;
     if (minus)
         return -(int)result;
