@@ -6,9 +6,25 @@
 */
 
 #include <SFML/Graphics.h>
+#include <stdbool.h>
+#include "structure.h"
 
-void analyse_event(sfRenderWindow *window, sfEvent *event)
+void analyse_event(engine_t *engine)
 {
-    if (event->type == sfEvtClosed)
-        sfRenderWindow_close(window);
+    if (engine->event.type == sfEvtClosed)
+        sfRenderWindow_close(engine->window);
+    if ((engine->event.type == sfEvtKeyPressed) &&
+        sfKeyboard_isKeyPressed(sfKeyL)) {
+        if (engine->show_hitbox)
+            engine->show_hitbox = false;
+        else
+            engine->show_hitbox = true;
+    }
+    if ((engine->event.type == sfEvtKeyPressed) &&
+        sfKeyboard_isKeyPressed(sfKeyS)) {
+        if (engine->show_sprite)
+            engine->show_sprite = false;
+        else
+            engine->show_sprite = true;
+    }
 }

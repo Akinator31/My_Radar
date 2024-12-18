@@ -23,11 +23,11 @@ all: $(NAME)
 
 build/%.o: %.c
 	mkdir -p $(dir $@)
-	gcc $(CFLAGS) -c $< -o $@ 
+	gcc $(CFLAGS) -c $< -o $@
 
 build-debug/%.o: %.c
 	mkdir -p $(dir $@)
-	gcc $(DEBUG_FLAGS) -c $< -o $@ 
+	gcc $(DEBUG_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 		gcc -o $(NAME) $(OBJ) $(CFLAGS)

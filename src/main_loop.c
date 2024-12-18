@@ -13,7 +13,7 @@
 #include "structure.h"
 #include "engine.h"
 #include "scenes.h"
-#include "event.h"
+#include "events.h"
 #include "utils.h"
 #include "errors.h"
 
@@ -33,7 +33,7 @@ int main(int ac, char **av, char **envp)
             ->scene_update(engine->current_scene, engine) == 84)
             return engine_destroy(engine);
         while (sfRenderWindow_pollEvent(engine->window, &engine->event))
-            analyse_event(engine->window, &engine->event);
+            analyse_event(engine);
         sfRenderWindow_display(engine->window);
     }
     return engine_destroy(engine);

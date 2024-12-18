@@ -23,6 +23,8 @@
     #define MOUSE_PRESSED() engine->event.type == sfEvtMouseButtonPressed
     #define IS_ENTITY(entity_id) ((entity_t *)(temp->data))->id == entity_id
     #define IS_CLICK(sprite) is_mouse_on_sprite(engine, sprite)
+    #define PLANE ((aircraft_t *)(aircraft_entity->data))
+    #define TOWER ((control_tower_t *)(tower_entity->data))
     #define SF_VECTOR_2U(x, y) ((sfVector2u){(x), (y)})
     #define SF_VECTOR_2I(x, y) ((sfVector2i){(x), (y)})
     #define SF_VECTOR_2F(x, y) ((sfVector2f){(x), (y)})
@@ -62,8 +64,9 @@ struct engine_s {
     linked_list_t *ressources;
     sfEvent event;
     char *script_path;
-    float delta_time;
     int default_fps_framerate;
+    bool show_hitbox;
+    bool show_sprite;
 };
 
 struct scene_s {
@@ -75,24 +78,6 @@ struct scene_s {
     void (*scene_pause_update)(scene_t *scene, engine_t *engine);
     void (*scene_destroy)(scene_t *scene);
 };
-
-// struct entity_s {
-//     sfSprite *sprite;
-//     sfVector2f takeoff_pos;
-//     sfVector2f landing_pos;
-//     int velocity;
-//     double direction_angle;
-//     int id;
-//     int state;
-//     int is_text;
-//     sfText *text;
-//     sfClock *clock;
-//     void (*entity_init)(entity_t *entity, scene_t *scene, engine_t *engine);
-//     void (*entity_update)(entity_t *entity, scene_t *scene, engine_t *engine);
-//     void (*entity_render)(entity_t *entity, engine_t *engine);
-//     sfBool (*entity_check_collision)(entity_t *entity, entity_t *other);
-//     void (*entity_destroy)(entity_t *entity);
-// };
 
 struct entity_s {
     int id;

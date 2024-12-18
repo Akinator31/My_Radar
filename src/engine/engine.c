@@ -18,7 +18,7 @@
 #include "utils.h"
 #include "errors.h"
 
-int tty_checker(char **envp)
+static int tty_checker(char **envp)
 {
     for (int i = 0; envp[i] != NULL; i++) {
         if ((envp[i][0] == 'D') && (envp[i][1] == 'I') && envp[i][2] == 'S')
@@ -27,7 +27,7 @@ int tty_checker(char **envp)
     return 0;
 }
 
-int analyse_script_line(char *line)
+static int analyse_script_line(char *line)
 {
     char **line_element = my_str_to_word_array(line);
 
@@ -45,7 +45,7 @@ int analyse_script_line(char *line)
     return 1;
 }
 
-int script_file_content_inspection(FILE *script_file)
+static int script_file_content_inspection(FILE *script_file)
 {
     char *buffer = NULL;
     size_t len = 0;
@@ -60,7 +60,7 @@ int script_file_content_inspection(FILE *script_file)
     return 1;
 }
 
-char *check_script_file(char **argv)
+static char *check_script_file(char **argv)
 {
     FILE *script_file = fopen(argv[1], "r");
 
@@ -75,12 +75,14 @@ char *check_script_file(char **argv)
     return argv[1];
 }
 
-engine_t *load_game(unsigned int default_framerate, char **envp, int ac, char **argv)
+engine_t *load_game(unsigned int default_framerate,
+    char **envp, int ac, char **argv)
 {
     engine_t *engine = malloc(sizeof(*engine));
 
     engine->script_path = check_script_file(argv);
-    if (!tty_checker(envp) || (ac < 2) || (engine->script_path == NULL) || (ac > 2)) {
+    if (!tty_checker(envp) || (ac < 2) ||
+        (engine->script_path == NULL) || (ac > 2)) {
         free(engine);
         return NULL;
     }
@@ -89,8 +91,9 @@ engine_t *load_game(unsigned int default_framerate, char **envp, int ac, char **
     engine->current_scene = NULL;
     engine->ressources = get_ressources_list();
     engine->scenes_list = load_scenes(engine);
-    engine->delta_time = 0.0;
     engine->default_fps_framerate = default_framerate;
+    engine->show_hitbox = true;
+    engine->show_sprite = true;
     sfRenderWindow_setFramerateLimit(engine->window,
         default_framerate);
     return engine;

@@ -53,10 +53,6 @@ int get_end_of_word(int star_index, char const *str)
             result++;
             star_index++;
         }
-
-    // for (star_index; (is_alphanumeric_char(str[star_index]) == 1)
-    //     && (star_index < my_strlen(str)); star_index++)
-    //     result++;
     return result;
 }
 

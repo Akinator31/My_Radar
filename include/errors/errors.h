@@ -8,7 +8,7 @@
 #ifndef INCLUDED_ERRORS_H
     #define INCLUDED_ERRORS_H
 
-typedef int (*error_func)(void);
+typedef int (*error_func_t)(void);
 
 typedef enum error_s {
     NOT_ENOUGHT_ARG,

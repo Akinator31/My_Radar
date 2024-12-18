@@ -8,7 +8,8 @@
 #ifndef INCLUDED_EVENT_H
     #define INCLUDED_EVENT_H
     #include <SFML/Graphics.h>
+    #include "structure.h"
 
-void analyse_event(sfRenderWindow *window, sfEvent *event);
+void analyse_event(engine_t *engine);
 
 #endif

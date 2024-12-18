@@ -12,7 +12,8 @@
 
 void render_image_entity(entity_t *image_entity, engine_t *engine)
 {
-    sfRenderWindow_drawSprite(engine->window, ((image_t *)(image_entity->data))->sprite, NULL);
+    sfRenderWindow_drawSprite(engine->window,
+        ((image_t *)(image_entity->data))->sprite, NULL);
 }
 
 void destroy_image_entity(entity_t *image_entity)

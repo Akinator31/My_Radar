@@ -41,7 +41,8 @@ int update_game_page(scene_t *scene, engine_t *engine)
 
     while (temp != NULL) {
         if ((((entity_t *)(temp->data))->entity_update != NULL))
-            ((entity_t *)(temp->data))->entity_update(temp->data, scene, engine);
+            ((entity_t *)(temp->data))->
+            entity_update(temp->data, scene, engine);
         temp = temp->next;
     }
     return 0;
@@ -55,8 +56,7 @@ scene_t *init_game_scene(engine_t *engine)
     srand(time(NULL));
     entity_list = push_front_list_all(entity_list, 1,
         create_image_entity(GET_RES(BACKGROUND)->ressource, POS(0, 0)));
-    entity_list = create_aircrafts(entity_list, engine);
-    entity_list = create_tower(entity_list, engine);
+    entity_list = load_entities(entity_list, engine);
     game_scene->id = 0;
     game_scene->clock = sfClock_create();
     game_scene->entity_list = entity_list;

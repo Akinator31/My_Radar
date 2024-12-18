@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include "errors.h"
 
-static const error_func errors[] = {
+static const error_func_t errors[] = {
     &not_enought_argument,
     &too_many_argument,
     &invalid_script_file,

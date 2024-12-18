@@ -21,8 +21,7 @@ linked_list_t *destroy_ressources(linked_list_t *ressources_list)
 {
     linked_list_t *temp = ressources_list;
 
-    while (ressources_list != NULL)
-    {
+    while (ressources_list != NULL) {
         temp = ressources_list;
         ressources_list = ressources_list->next;
         if (((ressource_t *)(temp->data))->type == TEXTURE) {
@@ -35,7 +34,8 @@ linked_list_t *destroy_ressources(linked_list_t *ressources_list)
     return ressources_list;
 }
 
-ressource_t *create_ressources(const char *filepath, ressource_type_t type, assets_t id)
+ressource_t *create_ressources(const char *filepath,
+    ressource_type_t type, assets_t id)
 {
     ressource_t *ressource = malloc(sizeof(ressource_t));
     sfTexture *texture = NULL;
@@ -56,6 +56,6 @@ linked_list_t *get_ressources_list(void)
     ressources_list = push_front_list_all(ressources_list, 3,
         create_ressources(assets[0], TEXTURE, BACKGROUND),
         create_ressources(assets[1], TEXTURE, AIRCRAFT),
-        create_ressources(assets[2], TEXTURE, TOWER));
+        create_ressources(assets[2], TEXTURE, CONTROL_TOWER));
     return ressources_list;
 }

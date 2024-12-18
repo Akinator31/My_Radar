@@ -15,7 +15,7 @@ typedef struct ressource_s ressource_t;
 typedef enum {
     BACKGROUND,
     AIRCRAFT,
-    TOWER
+    CONTROL_TOWER
 } assets_t;
 
 typedef enum {
@@ -30,7 +30,8 @@ struct ressource_s {
 };
 
 linked_list_t *get_ressources_list(void);
-ressource_t *create_ressources(const char *filepath, ressource_type_t type, assets_t id);
+ressource_t *create_ressources(const char *filepath,
+    ressource_type_t type, assets_t id);
 linked_list_t *destroy_ressources(linked_list_t *ressources_list);
 
 #endif
