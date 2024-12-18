@@ -26,6 +26,7 @@ struct aircraft_s {
     sfVector2f landing_pos;
     sfClock *clock;
     sfRectangleShape *hitbox;
+    int direction_angle;
     int offset_takeoff;
     int velocity;
 };

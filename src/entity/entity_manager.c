@@ -21,6 +21,8 @@ linked_list_t *load_aircrafts(engine_t *engine,
         my_getnbr(lines_element[2])), SF_VECTOR_2F(
         my_getnbr(lines_element[3]), my_getnbr(lines_element[4])));
     ((aircraft_t *)(aircraft->data))->velocity = my_getnbr(lines_element[5]);
+    ((aircraft_t *)(aircraft->data))->offset_takeoff =
+        my_getnbr(lines_element[6]);
     list = push_back_list(list, aircraft);
     return list;
 }

@@ -10,6 +10,7 @@
     #include <SFML/Graphics.h>
     #include "ressources.h"
     #include "structure.h"
+    #define M_PI 3.14159265358979323846
 
 sfRenderWindow *create_window(unsigned int width,
     unsigned int heigth, char *window_title);
