@@ -18,12 +18,11 @@ static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
     sfVector2f origin_size = {hitbox_size.x / 2, hitbox_size.y / 2};
 
     if (engine->show_sprite) {
-        sfSprite_setOrigin(PLANE->sprite, origin_size);
         sfRenderWindow_drawSprite(engine->window, PLANE->sprite, NULL);
     }
     if (engine->show_sprite && engine->show_hitbox) {
         sfRectangleShape_setSize(hitbox, hitbox_size);
-        sfRectangleShape_setOrigin(hitbox, origin_size);
+        //sfRectangleShape_setOrigin(hitbox, origin_size);
         sfRectangleShape_setOutlineColor(hitbox, sfRed);
         sfRectangleShape_setOutlineThickness(hitbox, 2);
         sfRectangleShape_setFillColor(hitbox, sfTransparent);
