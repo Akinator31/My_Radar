@@ -14,16 +14,16 @@
 linked_list_t *load_aircrafts(engine_t *engine,
     linked_list_t *list, char **lines_element)
 {
-    entity_t *aircraft = NULL;
+    entity_t *aircraft_entity = NULL;
 
-    aircraft = create_aircraft_entity(GET_RES(AIRCRAFT)->ressource,
+    aircraft_entity = create_aircraft_entity(GET_RES(AIRCRAFT)->ressource,
         SF_VECTOR_2F(my_getnbr(lines_element[1]),
         my_getnbr(lines_element[2])), SF_VECTOR_2F(
         my_getnbr(lines_element[3]), my_getnbr(lines_element[4])));
-    ((aircraft_t *)(aircraft->data))->velocity = my_getnbr(lines_element[5]);
-    ((aircraft_t *)(aircraft->data))->offset_takeoff =
+    PLANE->velocity = my_getnbr(lines_element[5]);
+    PLANE->offset_takeoff =
         my_getnbr(lines_element[6]);
-    list = push_back_list(list, aircraft);
+    list = push_back_list(list, aircraft_entity);
     return list;
 }
 
