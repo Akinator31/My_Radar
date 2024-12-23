@@ -29,15 +29,16 @@ static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
 
 void move_aircraft(entity_t *aircraft_entity)
 {
+    float delta_time = sfTime_asSeconds(sfClock_restart(PLANE->clock));
+    float distance = PLANE->velocity * delta_time;
     float radians = PLANE->direction_angle * (M_PI / 180);
     sfVector2f new_pos = {
-        PLANE->position.x + 1 * cos(radians),
-        PLANE->position.y + 1 * sin(radians)};
+        PLANE->position.x + distance * cos(radians),
+        PLANE->position.y + distance * sin(radians)};
 
     PLANE->position = new_pos;
     sfSprite_setPosition(PLANE->sprite, new_pos);
-    ((aircraft_t *)(aircraft_entity->data))->position = new_pos;
-    sfRectangleShape_setPosition(((aircraft_t *)(aircraft_entity->data))->hitbox,
+    sfRectangleShape_setPosition(PLANE->hitbox,
         new_pos);
 }
 
