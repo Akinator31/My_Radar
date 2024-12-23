@@ -1,5 +1,6 @@
 .vscode/
 generator.py
+generator.sh
 my_radar
 build/
 build-debug/

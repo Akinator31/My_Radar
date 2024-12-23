@@ -15,11 +15,9 @@ static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
 {
     sfRectangleShape *hitbox = PLANE->hitbox;
     sfVector2f hitbox_size = {20, 20};
-    sfVector2f origin_size = {hitbox_size.x / 2, hitbox_size.y / 2};
 
-    if (engine->show_sprite) {
+    if (engine->show_sprite)
         sfRenderWindow_drawSprite(engine->window, PLANE->sprite, NULL);
-    }
     if (engine->show_sprite && engine->show_hitbox) {
         sfRectangleShape_setSize(hitbox, hitbox_size);
         sfRectangleShape_setOutlineColor(hitbox, sfRed);
