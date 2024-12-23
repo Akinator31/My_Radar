@@ -22,7 +22,6 @@ static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
     }
     if (engine->show_sprite && engine->show_hitbox) {
         sfRectangleShape_setSize(hitbox, hitbox_size);
-        //sfRectangleShape_setOrigin(hitbox, origin_size);
         sfRectangleShape_setOutlineColor(hitbox, sfRed);
         sfRectangleShape_setOutlineThickness(hitbox, 2);
         sfRectangleShape_setFillColor(hitbox, sfTransparent);
@@ -32,12 +31,15 @@ static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
 
 void move_aircraft(entity_t *aircraft_entity)
 {
-    sfVector2f new_pos = {1 * cos(PLANE->direction_angle),
-        1 * sin(PLANE->direction_angle)};
+    float radians = PLANE->direction_angle * (M_PI / 180);
+    sfVector2f new_pos = {
+        PLANE->position.x + 1 * cos(radians),
+        PLANE->position.y + 1 * sin(radians)};
 
-    sfSprite_move(PLANE->sprite, new_pos);
+    PLANE->position = new_pos;
+    sfSprite_setPosition(PLANE->sprite, new_pos);
     ((aircraft_t *)(aircraft_entity->data))->position = new_pos;
-    sfRectangleShape_move(((aircraft_t *)(aircraft_entity->data))->hitbox,
+    sfRectangleShape_setPosition(((aircraft_t *)(aircraft_entity->data))->hitbox,
         new_pos);
 }
 
@@ -67,7 +69,8 @@ void set_sprite_rotation(aircraft_t *aircraft,
     float angle = atan2(y, x) * (180 / M_PI);
 
     sfSprite_setRotation(aircraft->sprite, angle);
-    sfRectangleShape_setPosition(aircraft->hitbox, aircraft->position);
+    sfRectangleShape_setRotation(aircraft->hitbox, angle);
+    sfRectangleShape_setPosition(aircraft->hitbox, aircraft->takeoff_pos);
     aircraft->direction_angle = angle;
 }
 
