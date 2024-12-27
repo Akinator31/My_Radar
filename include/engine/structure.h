@@ -36,8 +36,8 @@ typedef struct ressource_manager_s ressource_manager_t;
 
 enum entity_state {
     ACTIVE,
-    TOUCH,
-    OFF_SCREEN
+    DESTROY,
+    PREPARE,
 };
 
 enum game_state {
@@ -73,7 +73,7 @@ struct scene_s {
     int id;
     linked_list_t *entity_list;
     sfClock *clock;
-    int (*scene_update)(scene_t *scene, engine_t *engine);
+    int (*scene_update)(scene_t *scene);
     void (*scene_render)(scene_t *scene, engine_t *engine);
     void (*scene_pause_update)(scene_t *scene, engine_t *engine);
     void (*scene_destroy)(scene_t *scene);
@@ -81,9 +81,10 @@ struct scene_s {
 
 struct entity_s {
     int id;
+    enum entity_state state;
     void *data;
     void (*entity_render)(entity_t *entity, engine_t *engine);
-    void (*entity_update)(entity_t *entity, scene_t *scene, engine_t *engine);
+    void (*entity_update)(linked_list_t *node, entity_t *entity);
     void (*entity_destroy)(entity_t *entity);
 };
 

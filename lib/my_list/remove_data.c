@@ -26,3 +26,15 @@ linked_list_t *pop_front_list(linked_list_t *list,
     clean_func(list);
     return temp;
 }
+
+void delete_node(linked_list_t *element)
+{
+    linked_list_t *temp = NULL;
+
+    if ((element == NULL) || (element->next == NULL))
+        return;
+    temp = element->next;
+    element->data = element->next->data;
+    element->next = element->next->next;
+    free(temp);
+}

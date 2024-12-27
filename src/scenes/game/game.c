@@ -17,7 +17,8 @@ void render_game_page(scene_t *scene, engine_t *engine)
     linked_list_t *temp = scene->entity_list;
 
     while (temp != NULL) {
-        ((entity_t *)(temp->data))->entity_render(temp->data, engine);
+        if (temp->data != NULL)
+            ((entity_t *)(temp->data))->entity_render(temp->data, engine);
         temp = temp->next;
     }
 }
@@ -35,14 +36,15 @@ void destroy_game_page(scene_t *scene)
     free(scene);
 }
 
-int update_game_page(scene_t *scene, engine_t *engine)
+int update_game_page(scene_t *scene)
 {
     linked_list_t *temp = scene->entity_list;
 
     while (temp != NULL) {
-        if ((((entity_t *)(temp->data))->entity_update != NULL))
+        if (((((entity_t *)(temp->data))->entity_update != NULL) &&
+            (temp->data != NULL)))
             ((entity_t *)(temp->data))->
-            entity_update(temp->data, scene, engine);
+            entity_update(temp, temp->data);
         temp = temp->next;
     }
     return 0;

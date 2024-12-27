@@ -11,23 +11,40 @@
 #include "entity.h"
 #include "utils.h"
 
+void update_aircraft_entity(linked_list_t *node, entity_t *aircraft_entity)
+{
+    if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE) &&
+        (((int)(PLANE->position.x) == (int)(PLANE->landing_pos.x)) ||
+        ((int)(PLANE->position.y) == (int)(PLANE->landing_pos.y)))) {
+            aircraft_entity->state = DESTROY;
+            sfClock_destroy(PLANE->clock);
+            sfRectangleShape_destroy(PLANE->hitbox);
+            sfSprite_destroy(PLANE->sprite);
+            free(aircraft_entity->data);
+            free(aircraft_entity);
+            delete_node(node);
+        }
+}
+
 static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
 {
     sfRectangleShape *hitbox = PLANE->hitbox;
     sfVector2f hitbox_size = {20, 20};
 
-    if (engine->show_sprite)
-        sfRenderWindow_drawSprite(engine->window, PLANE->sprite, NULL);
-    if (engine->show_sprite && engine->show_hitbox) {
-        sfRectangleShape_setSize(hitbox, hitbox_size);
-        sfRectangleShape_setOutlineColor(hitbox, sfRed);
-        sfRectangleShape_setOutlineThickness(hitbox, 2);
-        sfRectangleShape_setFillColor(hitbox, sfTransparent);
-        sfRenderWindow_drawRectangleShape(engine->window, hitbox, NULL);
+    if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE)) {
+        if (engine->show_sprite)
+            sfRenderWindow_drawSprite(engine->window, PLANE->sprite, NULL);
+        if (engine->show_sprite && engine->show_hitbox) {
+            sfRectangleShape_setSize(hitbox, hitbox_size);
+            sfRectangleShape_setOutlineColor(hitbox, sfRed);
+            sfRectangleShape_setOutlineThickness(hitbox, 2);
+            sfRectangleShape_setFillColor(hitbox, sfTransparent);
+            sfRenderWindow_drawRectangleShape(engine->window, hitbox, NULL);
+        }
     }
 }
 
-void move_aircraft(entity_t *aircraft_entity)
+static void move_aircraft(entity_t *aircraft_entity)
 {
     float delta_time = sfTime_asSeconds(sfClock_restart(PLANE->clock));
     float distance = PLANE->velocity * delta_time;
@@ -44,8 +61,15 @@ void move_aircraft(entity_t *aircraft_entity)
 
 void render_aircraft_entity(entity_t *aircraft_entity, engine_t *engine)
 {
-    if (sfTime_asSeconds(sfClock_getElapsedTime(engine->clock)) >=
-        PLANE->offset_takeoff) {
+    if ((aircraft_entity != NULL) && (aircraft_entity->state == PREPARE) &&
+        (sfTime_asSeconds(sfClock_getElapsedTime(engine->clock))
+        >= PLANE->offset_takeoff)) {
+        PLANE->clock = sfClock_create();
+        aircraft_entity->state = ACTIVE;
+    }
+    if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE) &&
+        (sfTime_asSeconds(sfClock_getElapsedTime(engine->clock))
+        >= PLANE->offset_takeoff)) {
         hitbox_manager(aircraft_entity, engine);
         move_aircraft(aircraft_entity);
     }
@@ -53,11 +77,20 @@ void render_aircraft_entity(entity_t *aircraft_entity, engine_t *engine)
 
 void destroy_aircraft_entity(entity_t *aircraft_entity)
 {
-    sfSprite_destroy(PLANE->sprite);
-    sfClock_destroy(PLANE->clock);
-    sfRectangleShape_destroy(PLANE->hitbox);
-    free(aircraft_entity->data);
-    free(aircraft_entity);
+    if (aircraft_entity->state == ACTIVE) {
+        sfSprite_destroy(PLANE->sprite);
+        sfRectangleShape_destroy(PLANE->hitbox);
+        sfClock_destroy(PLANE->clock);
+        free(aircraft_entity->data);
+        free(aircraft_entity);
+    } else if (aircraft_entity->state == PREPARE) {
+        sfSprite_destroy(PLANE->sprite);
+        sfRectangleShape_destroy(PLANE->hitbox);
+        free(aircraft_entity->data);
+        free(aircraft_entity);
+    } else {
+        free(aircraft_entity);
+    }
 }
 
 void set_sprite_rotation(aircraft_t *aircraft,
@@ -83,14 +116,14 @@ entity_t *create_aircraft_entity(sfTexture *texture,
     aircraft->position = takeoff_pos;
     aircraft->takeoff_pos = takeoff_pos;
     aircraft->landing_pos = landing_pos;
-    aircraft->clock = sfClock_create();
     aircraft->hitbox = sfRectangleShape_create();
     set_sprite_rotation(aircraft, takeoff_pos, landing_pos);
     sfSprite_setTexture(aircraft->sprite, texture, sfFalse);
     sfSprite_setPosition(aircraft->sprite, takeoff_pos);
     aircraft_entity->data = aircraft;
+    aircraft_entity->state = PREPARE;
     aircraft_entity->entity_render = render_aircraft_entity;
-    aircraft_entity->entity_update = NULL;
+    aircraft_entity->entity_update = update_aircraft_entity;
     aircraft_entity->entity_destroy = destroy_aircraft_entity;
     return aircraft_entity;
 }
