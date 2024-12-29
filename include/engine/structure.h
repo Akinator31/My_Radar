@@ -84,7 +84,8 @@ struct entity_s {
     enum entity_state state;
     void *data;
     void (*entity_render)(entity_t *entity, engine_t *engine);
-    void (*entity_update)(linked_list_t *node, entity_t *entity);
+    linked_list_t *(*entity_update)(linked_list_t *node,
+        entity_t *entity, scene_t *scene);
     void (*entity_destroy)(entity_t *entity);
 };
 

@@ -43,8 +43,8 @@ int update_game_page(scene_t *scene)
     while (temp != NULL) {
         if (((((entity_t *)(temp->data))->entity_update != NULL) &&
             (temp->data != NULL)))
-            ((entity_t *)(temp->data))->
-            entity_update(temp, temp->data);
+            temp = ((entity_t *)(temp->data))->
+            entity_update(temp, temp->data, scene);
         temp = temp->next;
     }
     return 0;

@@ -27,14 +27,25 @@ linked_list_t *pop_front_list(linked_list_t *list,
     return temp;
 }
 
-void delete_node(linked_list_t *element)
+linked_list_t *delete_node(linked_list_t **list, linked_list_t *element)
 {
     linked_list_t *temp = NULL;
+    linked_list_t *prev = NULL;
 
-    if ((element == NULL) || (element->next == NULL))
-        return;
-    temp = element->next;
-    element->data = element->next->data;
-    element->next = element->next->next;
-    free(temp);
+    if ((list == NULL) || (*list == NULL) || (element == NULL))
+        return element;
+    if (*list == element) {
+        temp = *list;
+        *list = (*list)->next;
+        free(temp);
+        return *list;
+    }
+    prev = *list;
+    while ((prev->next != NULL) && (prev->next != element))
+        prev = prev->next;
+    if (prev->next == NULL)
+        return NULL;
+    prev->next = element->next;
+    free(element);
+    return prev->next;
 }

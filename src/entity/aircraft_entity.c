@@ -11,7 +11,8 @@
 #include "entity.h"
 #include "utils.h"
 
-void update_aircraft_entity(linked_list_t *node, entity_t *aircraft_entity)
+linked_list_t *update_aircraft_entity(linked_list_t *node,
+    entity_t *aircraft_entity, scene_t *scene)
 {
     if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE) &&
         (((int)(PLANE->position.x) == (int)(PLANE->landing_pos.x)) ||
@@ -22,8 +23,9 @@ void update_aircraft_entity(linked_list_t *node, entity_t *aircraft_entity)
             sfSprite_destroy(PLANE->sprite);
             free(aircraft_entity->data);
             free(aircraft_entity);
-            delete_node(node);
+            return delete_node(&scene->entity_list, node);
         }
+    return node;
 }
 
 static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
