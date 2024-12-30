@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-int arrlen(const char **arr)
+int arrlen(char **arr)
 {
     int result = 0;
 

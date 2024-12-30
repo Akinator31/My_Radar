@@ -31,7 +31,13 @@ static int analyse_script_line(char *line)
 {
     char **line_element = my_str_to_word_array(line);
 
-    if (!is_char_of_char(line_element[0])) {
+    if (!is_plane_or_tower(line_element[0])) {
+        free_2d_array_of_char(line_element);
+        return 0;
+    }
+    if (((my_strcmp(line_element[0], "A") == 0) && (arrlen(line_element) != 7))
+        || ((my_strcmp(line_element[0], "T") == 0) &&
+        (arrlen(line_element) != 4))) {
         free_2d_array_of_char(line_element);
         return 0;
     }

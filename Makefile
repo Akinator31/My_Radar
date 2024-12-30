@@ -11,7 +11,7 @@ INCLUDE = $(INCLUDE_H:%=-I%)
 OBJ = 	$(SRC:%.c=build/%.o)
 OBJ_DEBUG = $(SRC:%.c=build-debug/%.o)
 CFLAGS += 	-lcsfml-audio -lcsfml-graphics -lcsfml-window \
-			-lcsfml-network -lcsfml-system -Wextra -Wall -lm $(INCLUDE)
+			-lcsfml-network -lcsfml-system -Wextra -Wall -lm $(INCLUDE) -g3
 DEBUG_FLAGS = 	-fsanitize=address -g3 -lcsfml-audio -lcsfml-graphics \
 				-lcsfml-window -lcsfml-network -lcsfml-system \
 				-Wextra -Wall -lm $(INCLUDE)
