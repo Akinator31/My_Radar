@@ -29,5 +29,6 @@ linked_list_t *clear_list_and_data(linked_list_t *list,
     void (*clear_func)(void *data));
 linked_list_t *clear_list(linked_list_t *list);
 linked_list_t *delete_node(linked_list_t **list, linked_list_t *element);
+int get_linked_list_len(linked_list_t *list);
 
 #endif

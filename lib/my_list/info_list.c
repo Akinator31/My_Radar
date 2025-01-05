@@ -41,3 +41,15 @@ linked_list_t *clear_list(linked_list_t *list)
     free(list);
     return NULL;
 }
+
+int get_linked_list_len(linked_list_t *list)
+{
+    linked_list_t *temp = list;
+    int result = 0;
+
+    while (temp != NULL) {
+        result++;
+        temp = temp->next;
+    }
+    return result;
+}

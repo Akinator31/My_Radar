@@ -16,9 +16,9 @@ CFLAGS += 	-lcsfml-audio -lcsfml-graphics -lcsfml-window \
 DEBUG_FLAGS = 	-fsanitize=address -g3 -lcsfml-audio -lcsfml-graphics \
 				-lcsfml-window -lcsfml-network -lcsfml-system \
 				-Wextra -Wall -lm $(INCLUDE)
-OPTIMIZATION_FLAGS = 	-fsanitize=address -g -pg -lcsfml-audio -lcsfml-graphics \
-						-lcsfml-window -lcsfml-network -lcsfml-system \
-						-Wextra -Wall -lm $(INCLUDE)
+OPTIMIZATION_FLAGS = 	-fsanitize=address -g -pg -lcsfml-audio \
+						-lcsfml-graphics -lcsfml-window -lcsfml-network \
+						-lcsfml-system -Wextra -Wall -lm $(INCLUDE)
 
 NAME = my_radar
 DEBUG_NAME = debug

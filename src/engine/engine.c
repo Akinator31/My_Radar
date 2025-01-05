@@ -94,12 +94,12 @@ engine_t *load_game(unsigned int default_framerate,
     }
     engine->window = create_window(WIDTH, HEIGTH, NAME);
     engine->clock = sfClock_create();
-    engine->current_scene = NULL;
     engine->ressources = get_ressources_list();
     engine->scenes_list = load_scenes(engine);
     engine->default_fps_framerate = default_framerate;
     engine->show_hitbox = true;
     engine->show_sprite = true;
+    engine->show_quadtree = false;
     sfRenderWindow_setFramerateLimit(engine->window,
         default_framerate);
     return engine;
@@ -116,10 +116,12 @@ void clean_scene(linked_list_t *list)
     list = clear_list(list);
 }
 
-int engine_destroy(engine_t *engine)
+int engine_destroy(engine_t *engine, int exit_code)
 {
     if (engine == NULL)
         return 84;
+    if (exit_code == 84)
+        destroy_quadtree(engine->quadtree);
     clean_scene(engine->scenes_list);
     sfRenderWindow_destroy(engine->window);
     sfClock_destroy(engine->clock);

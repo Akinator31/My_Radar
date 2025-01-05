@@ -30,11 +30,12 @@ int main(int ac, char **av, char **envp)
         sfRenderWindow_clear(engine->window, sfBlack);
         load_current_scene(engine);
         if (((scene_t *)(engine->current_scene))
-            ->scene_update(engine->current_scene) == 84)
-            return engine_destroy(engine);
+            ->scene_update(engine->current_scene, engine) == 84)
+            return engine_destroy(engine, 84);
+        destroy_quadtree(engine->quadtree);
         while (sfRenderWindow_pollEvent(engine->window, &engine->event))
             analyse_event(engine);
         sfRenderWindow_display(engine->window);
     }
-    return engine_destroy(engine);
+    return engine_destroy(engine, 0);
 }

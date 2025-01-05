@@ -13,6 +13,7 @@
     #include <stdio.h>
     #include "my_list.h"
     #include "my_lib.h"
+    #include "quadtree.h"
     #define POS(x, y) ((sfVector2f){(x), (y)})
     #define AREA(x, y) ((sfIntRect){(x), (y)})
     #define TX_CREATE(res, i) res = sfTexture_createFromFile(assets[i], NULL)
@@ -63,17 +64,19 @@ struct engine_s {
     linked_list_t *scenes_list;
     linked_list_t *ressources;
     sfEvent event;
+    quadtree_t *quadtree;
     char *script_path;
     int default_fps_framerate;
     bool show_hitbox;
     bool show_sprite;
+    bool show_quadtree;
 };
 
 struct scene_s {
     int id;
     linked_list_t *entity_list;
     sfClock *clock;
-    int (*scene_update)(scene_t *scene);
+    int (*scene_update)(scene_t *scene, engine_t *engine);
     void (*scene_render)(scene_t *scene, engine_t *engine);
     void (*scene_pause_update)(scene_t *scene, engine_t *engine);
     void (*scene_destroy)(scene_t *scene);

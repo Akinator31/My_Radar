@@ -14,7 +14,7 @@
 
 engine_t *load_game(unsigned int default_framerate,
     char **envp, int ac, char **argv);
-int engine_destroy(engine_t *engine);
+int engine_destroy(engine_t *engine, int exit_code);
 void load_current_scene(engine_t *engine);
 
 #endif
