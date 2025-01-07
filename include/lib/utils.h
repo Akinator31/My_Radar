@@ -10,6 +10,7 @@
     #include <SFML/Graphics.h>
     #include "ressources.h"
     #include "structure.h"
+    #include "entity.h"
     #define M_PI 3.14159265358979323846
 
 sfRenderWindow *create_window(unsigned int width,
@@ -26,5 +27,6 @@ int arrlen(char **arr);
 int is_plane_or_tower(char *buffer);
 int is_char_of_number(char *buffer);
 void free_2d_array_of_char(char **arr);
+bool plane_has_arrived(aircraft_t *aircraft);
 
 #endif

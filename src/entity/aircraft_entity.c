@@ -15,12 +15,12 @@ linked_list_t *update_aircraft_entity(linked_list_t *node,
     entity_t *aircraft_entity, scene_t *scene)
 {
     if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE) &&
-        (((int)(PLANE->position.x) == (int)(PLANE->landing_pos.x)) ||
-        ((int)(PLANE->position.y) == (int)(PLANE->landing_pos.y)))) {
+        plane_has_arrived(PLANE)) {
             aircraft_entity->state = DESTROY;
             sfClock_destroy(PLANE->clock);
             sfRectangleShape_destroy(PLANE->hitbox);
             sfSprite_destroy(PLANE->sprite);
+            sfClock_destroy(PLANE->position_clock);
             free(aircraft_entity->data);
             free(aircraft_entity);
             return delete_node(&scene->entity_list, node);
@@ -67,6 +67,7 @@ void render_aircraft_entity(entity_t *aircraft_entity, engine_t *engine)
         (sfTime_asSeconds(sfClock_getElapsedTime(engine->clock))
         >= PLANE->offset_takeoff)) {
         PLANE->clock = sfClock_create();
+        PLANE->position_clock = sfClock_create();
         aircraft_entity->state = ACTIVE;
     }
     if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE) &&
@@ -83,6 +84,7 @@ void destroy_aircraft_entity(entity_t *aircraft_entity)
         sfSprite_destroy(PLANE->sprite);
         sfRectangleShape_destroy(PLANE->hitbox);
         sfClock_destroy(PLANE->clock);
+        sfClock_destroy(PLANE->position_clock);
         free(aircraft_entity->data);
         free(aircraft_entity);
     } else if (aircraft_entity->state == PREPARE) {

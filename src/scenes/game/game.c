@@ -71,6 +71,8 @@ void manage_quadtree(linked_list_t **temp, linked_list_t **points_to_free,
         *temp = ((entity_t *)((*temp)->data))->
         entity_update(*temp, (*temp)->data, scene);
     }
+    if (*temp == NULL)
+        return;
     if (((((entity_t *)((*temp)->data))->entity_update != NULL) &&
         ((*temp)->data != NULL)) && (((entity_t *)((*temp)->data))->state
         == ACTIVE)) {
@@ -92,7 +94,8 @@ int update_game_page(scene_t *scene, engine_t *engine)
     engine->quadtree = create_quadtree(boundary, 4, 6);
     while (temp != NULL) {
         manage_quadtree(&temp, &points_to_free, engine, scene);
-        temp = temp->next;
+        if (temp != NULL)
+            temp = temp->next;
     }
     if (engine->show_quadtree)
         display_rectangle(engine->window, engine->quadtree);
