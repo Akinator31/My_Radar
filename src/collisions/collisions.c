@@ -64,11 +64,11 @@ static sfVector2f *get_shape_vertex(aircraft_t *shape)
 
 sfVector2f get_position_with_rotation(aircraft_t *aircraft, sfVector2f hitbox)
 {
+    float radian = aircraft->direction_angle * (M_PI / 180.0);
+
     return (sfVector2f){
-        hitbox.x + (cos(aircraft->direction_angle * (180 / M_PI))
-        - sin(aircraft->direction_angle) * (180 / M_PI)), hitbox.y
-        + (cos(aircraft->direction_angle * (180 / M_PI))
-        + sin(aircraft->direction_angle) * (180 / M_PI))
+        hitbox.x + cos(radian) - sin(radian),
+        hitbox.y + sin(radian) + cos(radian)
     };
 }
 
@@ -90,10 +90,10 @@ static sfVector2f *get_normals_list(sfVector2f *points_one,
     normals[1] = get_normalized_vector_with_coords(points_one, pos_one, 2, 1);
     normals[2] = get_normalized_vector_with_coords(points_one, pos_one, 3, 2);
     normals[3] = get_normalized_vector_with_coords(points_one, pos_one, 0, 3);
-    normals[0] = get_normalized_vector_with_coords(points_two, pos_two, 1, 0);
-    normals[1] = get_normalized_vector_with_coords(points_two, pos_two, 2, 1);
-    normals[2] = get_normalized_vector_with_coords(points_two, pos_two, 3, 2);
-    normals[3] = get_normalized_vector_with_coords(points_two, pos_two, 0, 3);
+    normals[4] = get_normalized_vector_with_coords(points_two, pos_two, 1, 0);
+    normals[5] = get_normalized_vector_with_coords(points_two, pos_two, 2, 1);
+    normals[6] = get_normalized_vector_with_coords(points_two, pos_two, 3, 2);
+    normals[7] = get_normalized_vector_with_coords(points_two, pos_two, 0, 3);
     return normals;
 }
 

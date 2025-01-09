@@ -138,7 +138,7 @@ static void manage_collisions(quadtree_t *quadtree, engine_t *engine)
 
     if (quadtree == NULL)
         return;
-    range = get_rectangle_with_offset(quadtree->boundary, 0);
+    range = get_rectangle_with_offset(quadtree->boundary, 50);
     aircraft_entity_list = lauch_query(quadtree, range,
         aircraft_entity_list, &counter);
     free(range);
@@ -160,7 +160,7 @@ int update_game_page(scene_t *scene, engine_t *engine)
     if (get_number_of_plane(scene->entity_list) == 0)
         return 84;
     boundary = create_rectangle(0, 0, 1920, 1080);
-    engine->quadtree = create_quadtree(boundary, 5, 7);
+    engine->quadtree = create_quadtree(boundary, 20, 4);
     while (temp != NULL) {
         manage_quadtree(&temp, &points_to_free, engine, scene);
         temp = temp->next;

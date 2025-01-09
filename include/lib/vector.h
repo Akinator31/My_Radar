@@ -22,7 +22,7 @@ sfVector2f division_by_float(sfVector2f original_vector, float value);
 sfVector2f division_by_vector(sfVector2f original_vector,
     sfVector2f vector_to_add);
 float dot_product_vector(sfVector2f vector1, sfVector2f vector2);
-float get_vector_lenght(sfVector2f vector);
+float get_vector_length(sfVector2f vector);
 sfVector2f normalize_vector(sfVector2f vector);
 sfVector2f get_normal_vector_left(sfVector2f vector);
 sfVector2f get_normal_vector_right(sfVector2f vector);
