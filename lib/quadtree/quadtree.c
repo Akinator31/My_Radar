@@ -133,10 +133,10 @@ linked_list_t *lauch_query(quadtree_t *quadtree, rectangle_t *range,
             temp = temp->next;
         }
         if (quadtree->devided) {
-            lauch_query(quadtree->northwest, range, found, count);
-            lauch_query(quadtree->northeast, range, found, count);
-            lauch_query(quadtree->southwest, range, found, count);
-            lauch_query(quadtree->southeast, range, found, count);
+            found = lauch_query(quadtree->northwest, range, found, count);
+            found = lauch_query(quadtree->northeast, range, found, count);
+            found = lauch_query(quadtree->southwest, range, found, count);
+            found = lauch_query(quadtree->southeast, range, found, count);
         }
         return found;
     }

@@ -18,13 +18,13 @@ void render_tower_entity(entity_t *tower_entity, engine_t *engine)
 
     if (engine->show_sprite)
         sfRenderWindow_drawSprite(engine->window, TOWER->sprite, NULL);
-    if (engine->show_sprite && engine->show_hitbox) {
+    if (engine->show_hitbox) {
         sfCircleShape_setRadius(control_radius, radius);
         sfCircleShape_setFillColor(control_radius, sfTransparent);
         control_radius_pos.x += sfCircleShape_getRadius(control_radius);
         control_radius_pos.y += sfCircleShape_getRadius(control_radius);
-        sfSprite_setOrigin(TOWER->sprite, SF_VECTOR_2F(37.5, 37.5));
-        sfCircleShape_setOrigin(control_radius, SF_VECTOR_2F(radius, radius));
+        sfSprite_setPosition(TOWER->sprite, SF_VECTOR_2F(
+            control_radius_pos.x - 37.5, control_radius_pos.y - 37.5));
         sfCircleShape_setPosition(control_radius, TOWER->pos);
         sfCircleShape_setOutlineColor(control_radius, sfRed);
         sfCircleShape_setOutlineThickness(control_radius, 2);
@@ -55,5 +55,6 @@ entity_t *create_tower_entity(sfTexture *texture, sfVector2f pos, int radius)
     tower_entity->entity_render = render_tower_entity;
     tower_entity->entity_update = NULL;
     tower_entity->entity_destroy = destroy_tower_entity;
+    tower_entity->type = CONTROL_T;
     return tower_entity;
 }

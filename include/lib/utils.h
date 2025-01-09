@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-MUL-100-TLS-1-1-myhunter-pavel.de-wavrechin
+** B-MUL-100-TLS-1-1-myradar-pavel.de-wavrechin
 ** File description:
 ** utils
 */
@@ -28,5 +28,7 @@ int is_plane_or_tower(char *buffer);
 int is_char_of_number(char *buffer);
 void free_2d_array_of_char(char **arr);
 bool plane_has_arrived(aircraft_t *aircraft);
+bool check_tower_radius(entity_t *aircraft_one_t,
+    entity_t *aircraft_two_t, entity_t *tower_entity);
 
 #endif

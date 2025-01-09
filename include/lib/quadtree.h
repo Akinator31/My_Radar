@@ -43,6 +43,8 @@ struct quadtree_s {
 quadtree_t *create_quadtree(rectangle_t *boundary,
     int capacity, int depth_capacity);
 rectangle_t *create_rectangle(int x, int y, int w, int h);
+rectangle_t *get_rectangle_with_offset(rectangle_t *original_rectangle,
+    int offset);
 point_t *create_point(int x, int y, void *data);
 void subdivide(quadtree_t *quadtree);
 bool insert_element(quadtree_t *quadtree, point_t *point);

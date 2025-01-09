@@ -48,8 +48,9 @@ linked_list_t *load_entities(linked_list_t *entity_list, engine_t *engine)
         lines_element = my_str_to_word_array(lines);
         if (my_strcmp(lines_element[0], "A") == 0)
             entity_list = load_aircrafts(engine, entity_list, lines_element);
-        if (my_strcmp(lines_element[0], "T") == 0)
+        if (my_strcmp(lines_element[0], "T") == 0) {
             entity_list = load_tower(engine, entity_list, lines_element);
+        }
         free_2d_array_of_char(lines_element);
     }
     free(lines);

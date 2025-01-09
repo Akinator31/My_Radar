@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-MUL-100-TLS-1-1-myhunter-pavel.de-wavrechin [WSL : Ubuntu]
+** B-MUL-100-TLS-1-1-myradar-pavel.de-wavrechin [WSL : Ubuntu]
 ** File description:
 ** load_current_scene
 */

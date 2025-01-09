@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "my_list.h"
 #include "my_lib.h"
+#include "entity.h"
 
 linked_list_t *new_list(void)
 {
@@ -48,7 +49,20 @@ int get_linked_list_len(linked_list_t *list)
     int result = 0;
 
     while (temp != NULL) {
-        result++;
+            result++;
+        temp = temp->next;
+    }
+    return result;
+}
+
+int get_number_of_plane(linked_list_t *list)
+{
+    linked_list_t *temp = list;
+    int result = 0;
+
+    while (temp != NULL) {
+        if ((((entity_t *)(temp->data))->entity_update != NULL))
+            result++;
         temp = temp->next;
     }
     return result;

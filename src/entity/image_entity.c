@@ -35,5 +35,7 @@ entity_t *create_image_entity(sfTexture *texture, sfVector2f pos)
     image_entity->entity_render = render_image_entity;
     image_entity->entity_update = NULL;
     image_entity->entity_destroy = destroy_image_entity;
+    image_entity->state = ACTIVE;
+    image_entity->type = IMAGE_T;
     return image_entity;
 }

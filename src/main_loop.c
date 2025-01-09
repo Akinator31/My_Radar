@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-MUL-100-TLS-1-1-myhunter-pavel.de-wavrechin
+** B-MUL-100-TLS-1-1-myradar-pavel.de-wavrechin
 ** File description:
 ** main
 */
@@ -31,7 +31,7 @@ int main(int ac, char **av, char **envp)
         load_current_scene(engine);
         if (((scene_t *)(engine->current_scene))
             ->scene_update(engine->current_scene, engine) == 84)
-            return engine_destroy(engine, 84);
+            return engine_destroy(engine, 0);
         destroy_quadtree(engine->quadtree);
         while (sfRenderWindow_pollEvent(engine->window, &engine->event))
             analyse_event(engine);

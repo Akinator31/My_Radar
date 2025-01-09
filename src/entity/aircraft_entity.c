@@ -14,8 +14,7 @@
 linked_list_t *update_aircraft_entity(linked_list_t *node,
     entity_t *aircraft_entity, scene_t *scene)
 {
-    if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE) &&
-        plane_has_arrived(PLANE)) {
+    if ((aircraft_entity->state == ACTIVE) && plane_has_arrived(PLANE)) {
             aircraft_entity->state = DESTROY;
             sfClock_destroy(PLANE->clock);
             sfRectangleShape_destroy(PLANE->hitbox);
@@ -25,6 +24,15 @@ linked_list_t *update_aircraft_entity(linked_list_t *node,
             free(aircraft_entity);
             return delete_node(&scene->entity_list, node);
         }
+    if ((aircraft_entity != NULL) && (aircraft_entity->state == DESTROY)) {
+        sfRectangleShape_destroy(PLANE->hitbox);
+        sfSprite_destroy(PLANE->sprite);
+        sfClock_destroy(PLANE->clock);
+        sfClock_destroy(PLANE->position_clock);
+        free(aircraft_entity->data);
+        free(aircraft_entity);
+        return delete_node(&scene->entity_list, node);
+    }
     return node;
 }
 
@@ -34,9 +42,10 @@ static void hitbox_manager(entity_t *aircraft_entity, engine_t *engine)
     sfVector2f hitbox_size = {20, 20};
 
     if ((aircraft_entity != NULL) && (aircraft_entity->state == ACTIVE)) {
-        if (engine->show_sprite)
+        if (engine->show_sprite) {
             sfRenderWindow_drawSprite(engine->window, PLANE->sprite, NULL);
-        if (engine->show_sprite && engine->show_hitbox) {
+        }
+        if (engine->show_hitbox) {
             sfRectangleShape_setSize(hitbox, hitbox_size);
             sfRectangleShape_setOutlineColor(hitbox, sfRed);
             sfRectangleShape_setOutlineThickness(hitbox, 2);
@@ -87,7 +96,8 @@ void destroy_aircraft_entity(entity_t *aircraft_entity)
         sfClock_destroy(PLANE->position_clock);
         free(aircraft_entity->data);
         free(aircraft_entity);
-    } else if (aircraft_entity->state == PREPARE) {
+    } else if ((aircraft_entity->state == PREPARE)
+        || (aircraft_entity->state == DESTROY)) {
         sfSprite_destroy(PLANE->sprite);
         sfRectangleShape_destroy(PLANE->hitbox);
         free(aircraft_entity->data);
@@ -124,6 +134,7 @@ entity_t *create_aircraft_entity(sfTexture *texture,
     set_sprite_rotation(aircraft, takeoff_pos, landing_pos);
     sfSprite_setTexture(aircraft->sprite, texture, sfFalse);
     sfSprite_setPosition(aircraft->sprite, takeoff_pos);
+    aircraft_entity->type = AIRPLANE;
     aircraft_entity->data = aircraft;
     aircraft_entity->state = PREPARE;
     aircraft_entity->entity_render = render_aircraft_entity;

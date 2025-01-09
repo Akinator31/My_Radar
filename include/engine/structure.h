@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-MUL-100-TLS-1-1-myhunter-pavel.de-wavrechin [WSL : Ubuntu]
+** B-MUL-100-TLS-1-1-myradar-pavel.de-wavrechin [WSL : Ubuntu]
 ** File description:
 ** structure
 */
@@ -8,22 +8,15 @@
 #ifndef INCLUDED_STRUCTURE_H
     #define INCLUDED_STRUCTURE_H
     #include <SFML/Graphics.h>
-    #include <SFML/Audio.h>
     #include <stdbool.h>
     #include <stdio.h>
     #include "my_list.h"
     #include "my_lib.h"
     #include "quadtree.h"
     #define POS(x, y) ((sfVector2f){(x), (y)})
-    #define AREA(x, y) ((sfIntRect){(x), (y)})
     #define TX_CREATE(res, i) res = sfTexture_createFromFile(assets[i], NULL)
-    #define MUSIC_CREATE(res, i) res = sfMusic_createFromFile(assets[i])
     #define GET_RES(id) get_ressource_by_id(engine->ressources, id)
     #define GET_SPRITE() ((entity_t *)(temp->data))->sprite
-    #define MOUSE_RELEASED() engine->event.type == sfEvtMouseButtonReleased
-    #define MOUSE_PRESSED() engine->event.type == sfEvtMouseButtonPressed
-    #define IS_ENTITY(entity_id) ((entity_t *)(temp->data))->id == entity_id
-    #define IS_CLICK(sprite) is_mouse_on_sprite(engine, sprite)
     #define PLANE ((aircraft_t *)(aircraft_entity->data))
     #define TOWER ((control_tower_t *)(tower_entity->data))
     #define SF_VECTOR_2U(x, y) ((sfVector2u){(x), (y)})
@@ -41,20 +34,10 @@ enum entity_state {
     PREPARE,
 };
 
-enum game_state {
-    RUNNING,
-    PAUSED,
-};
-
-enum which_music {
-    MENU_MUSIC,
-    GAME_MUSIC,
-    PAUSE,
-};
-
-enum music_state {
-    PLAYING,
-    STOPPED
+enum entity_type {
+    AIRPLANE,
+    CONTROL_T,
+    IMAGE_T
 };
 
 struct engine_s {
@@ -65,6 +48,7 @@ struct engine_s {
     linked_list_t *ressources;
     sfEvent event;
     quadtree_t *quadtree;
+    linked_list_t *tower_list;
     char *script_path;
     int default_fps_framerate;
     bool show_hitbox;
@@ -75,6 +59,7 @@ struct engine_s {
 struct scene_s {
     int id;
     linked_list_t *entity_list;
+    linked_list_t *tower_list;
     sfClock *clock;
     int (*scene_update)(scene_t *scene, engine_t *engine);
     void (*scene_render)(scene_t *scene, engine_t *engine);
@@ -83,13 +68,13 @@ struct scene_s {
 };
 
 struct entity_s {
-    int id;
     enum entity_state state;
     void *data;
     void (*entity_render)(entity_t *entity, engine_t *engine);
     linked_list_t *(*entity_update)(linked_list_t *node,
         entity_t *entity, scene_t *scene);
     void (*entity_destroy)(entity_t *entity);
+    enum entity_type type;
 };
 
 #endif

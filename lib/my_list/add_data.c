@@ -55,6 +55,18 @@ linked_list_t *push_back_list(linked_list_t *list, void *data)
     return list;
 }
 
+linked_list_t *push_back_list_all(linked_list_t *list, int nb, ...)
+{
+    va_list args;
+
+    va_start(args, nb);
+    for (int i = 0; i < nb; i++) {
+        list = push_back_list(list, va_arg(args, void *));
+    }
+    va_end(args);
+    return list;
+}
+
 void my_rev_list(linked_list_t **begin)
 {
     linked_list_t *prev = NULL;

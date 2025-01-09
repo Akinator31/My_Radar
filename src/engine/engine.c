@@ -1,13 +1,12 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-MUL-100-TLS-1-1-myhunter-pavel.de-wavrechin
+** B-MUL-100-TLS-1-1-myradar-pavel.de-wavrechin
 ** File description:
 ** engine
 */
 
 #define _GNU_SOURCE
 #include <stdlib.h>
-#include <stdio.h>
 #include <SFML/Graphics.h>
 #include "engine.h"
 #include "my_lib.h"
@@ -126,6 +125,7 @@ int engine_destroy(engine_t *engine, int exit_code)
     sfRenderWindow_destroy(engine->window);
     sfClock_destroy(engine->clock);
     destroy_ressources(engine->ressources);
+    engine->tower_list = clear_list(engine->tower_list);
     free(engine);
     return 0;
 }

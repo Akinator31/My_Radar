@@ -21,6 +21,18 @@ rectangle_t *create_rectangle(int x, int y, int w, int h)
     return boundary;
 }
 
+rectangle_t *get_rectangle_with_offset(rectangle_t *original_rectangle,
+    int offset)
+{
+    rectangle_t *boundary = (rectangle_t *)malloc(sizeof(rectangle_t));
+
+    boundary->x = original_rectangle->x - offset;
+    boundary->y = original_rectangle->y - offset;
+    boundary->h = original_rectangle->h + offset;
+    boundary->w = original_rectangle->w + offset;
+    return boundary;
+}
+
 bool contains_point(rectangle_t *rectangle, point_t *point)
 {
     return (point->x >= rectangle->x &&

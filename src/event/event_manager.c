@@ -49,10 +49,18 @@ static void quadtree_visibility(engine_t *engine)
     }
 }
 
+static void quit_program(engine_t *engine)
+{
+    if ((engine->event.type == sfEvtKeyPressed) &&
+        sfKeyboard_isKeyPressed(sfKeyQ))
+        sfRenderWindow_close(engine->window);
+}
+
 void analyse_event(engine_t *engine)
 {
     window_manager(engine);
     hitbox_visibility(engine);
     sprite_visibility(engine);
     quadtree_visibility(engine);
+    quit_program(engine);
 }

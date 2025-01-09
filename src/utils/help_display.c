@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-MUL-100-TLS-1-1-myhunter-pavel.de-wavrechin
+** B-MUL-100-TLS-1-1-myradar-pavel.de-wavrechin
 ** File description:
 ** help_display
 */
@@ -32,6 +32,8 @@ static const char *help_message = "=============================\n"
     "USER INTERACTIONS:\n"
     "  'L' key     Enable/disable hitboxes and control areas.\n"
     "  'S' key     Enable/disable entity sprites.\n"
+    "  'K' key     Enable/disable quadtree visualization\n"
+    "  'Q' key     Quit the program\n"
     "\n"
     "GOOD LUCK!\n";
 
