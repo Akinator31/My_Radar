@@ -114,19 +114,10 @@ static void check_collisions(linked_list_t *one,
 
 static void apply_collisions(linked_list_t *aircraft_list, engine_t *engine)
 {
-    linked_list_t *aircraft = NULL;
-    linked_list_t *other = NULL;
-
-    if (aircraft_list == NULL)
-        return;
-    aircraft = aircraft_list;
-    other = aircraft_list->next;
-    while (aircraft != NULL) {
-        while (other != NULL) {
-            check_collisions(aircraft, other, engine);
-            other = other->next;
+    for (linked_list_t *a = aircraft_list; a != NULL; a = a->next) {
+        for (linked_list_t *b = a->next; b != NULL; b = b->next) {
+            check_collisions(a, b, engine);
         }
-        aircraft = aircraft->next;
     }
 }
 
